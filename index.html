@@ -3239,12 +3239,134 @@ button:active{
     .upi-qr-info{width:100%}
 }
 
+
+/* =========================================================
+   FRESHCART OTP LOGIN
+========================================================= */
+#fcLoginGate{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(5,22,12,.62);
+    backdrop-filter:blur(14px);
+}
+#fcLoginGate.hidden{display:none}
+.fc-login-box{
+    width:430px;
+    max-width:100%;
+    background:#fff;
+    border-radius:28px;
+    padding:34px 28px;
+    box-shadow:0 30px 90px rgba(0,0,0,.25);
+    text-align:center;
+}
+.fc-login-logo{
+    width:58px;height:58px;margin:0 auto 15px;
+    display:grid;place-items:center;
+    border-radius:18px;
+    background:linear-gradient(135deg,#26c96b,#087f3e);
+    color:#fff;font-size:27px;
+    box-shadow:0 12px 28px rgba(24,169,87,.25);
+}
+.fc-login-box h2{
+    font-family:"Manrope",sans-serif;
+    font-size:25px;margin-bottom:7px;
+}
+.fc-login-box p{
+    color:#748078;font-size:12px;line-height:1.6;margin-bottom:22px;
+}
+#fcLoginEmail{
+    width:100%;padding:14px;
+    border:1px solid #dfe7e1;border-radius:13px;
+    outline:none;background:#fbfdfb;font-size:13px;
+}
+#fcLoginEmail:focus{
+    border-color:#19a957;
+    box-shadow:0 0 0 4px rgba(25,169,87,.08);
+    background:#fff;
+}
+#fcSendOtp{
+    width:100%;margin-top:12px;padding:14px;
+    border:0;border-radius:13px;
+    background:linear-gradient(135deg,#1bbb60,#087b3d);
+    color:#fff;font-weight:800;font-size:13px;
+}
+#fcOtpArea{display:none;margin-top:15px}
+#fcOtpArea.show{display:block}
+#fcOtp{
+    width:100%;padding:14px;
+    border:1px solid #dfe7e1;border-radius:13px;
+    outline:none;text-align:center;
+    letter-spacing:7px;font-size:22px;font-weight:800;
+}
+#fcVerifyOtp{
+    width:100%;margin-top:12px;padding:14px;
+    border:0;border-radius:13px;background:#102019;
+    color:#fff;font-weight:800;
+}
+#fcLoginMsg{
+    min-height:18px;margin-top:12px;
+    font-size:11px;color:#e04c4c;
+}
+#fcResendOtp{
+    border:0;background:transparent;color:#13984b;
+    font-size:11px;font-weight:800;margin-top:8px;
+    display:none;
+}
+#fcResendOtp.show{display:inline-block}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
 
 <body>
+
+<!-- =========================================================
+     FRESHCART OTP LOGIN GATE
+========================================================= -->
+<div id="fcLoginGate">
+    <div class="fc-login-box">
+        <div class="fc-login-logo">🛒</div>
+        <h2>Welcome to FreshCart</h2>
+        <p>Sign in with your email to continue shopping securely.</p>
+
+        <input
+            id="fcLoginEmail"
+            type="email"
+            autocomplete="email"
+            placeholder="Enter your email address">
+
+        <button id="fcSendOtp" type="button" onclick="fcSendOtp()">
+            Send OTP
+        </button>
+
+        <div id="fcOtpArea">
+            <input
+                id="fcOtp"
+                type="text"
+                inputmode="numeric"
+                maxlength="6"
+                autocomplete="one-time-code"
+                placeholder="Enter 6-digit OTP">
+
+            <button id="fcVerifyOtp" type="button" onclick="fcVerifyOtp()">
+                Verify & Continue
+            </button>
+
+            <button id="fcResendOtp" type="button" onclick="fcSendOtp()">
+                Resend OTP
+            </button>
+        </div>
+
+        <div id="fcLoginMsg"></div>
+    </div>
+</div>
+
 
 
 <!-- =========================================================
@@ -6535,6 +6657,136 @@ document.addEventListener(
     }
 );
 
+</script>
+
+
+<script>
+/* =========================================================
+   REAL SERVER-BACKED OTP LOGIN
+========================================================= */
+(function(){
+    const gate = document.getElementById("fcLoginGate");
+    const emailInput = document.getElementById("fcLoginEmail");
+    const otpInput = document.getElementById("fcOtp");
+    const otpArea = document.getElementById("fcOtpArea");
+    const msg = document.getElementById("fcLoginMsg");
+    const sendBtn = document.getElementById("fcSendOtp");
+    const verifyBtn = document.getElementById("fcVerifyOtp");
+    const resendBtn = document.getElementById("fcResendOtp");
+
+    window.fcShowMsg = function(text, ok){
+        msg.textContent = text || "";
+        msg.style.color = ok ? "#168044" : "#e04c4c";
+    };
+
+    window.fcSendOtp = async function(){
+        const email = emailInput.value.trim().toLowerCase();
+
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){
+            fcShowMsg("Please enter a valid email address.", false);
+            emailInput.focus();
+            return;
+        }
+
+        sendBtn.disabled = true;
+        resendBtn.disabled = true;
+        sendBtn.textContent = "Sending OTP...";
+        fcShowMsg("Sending a secure OTP to your email...", true);
+
+        try{
+            const response = await fetch("/api/send-otp", {
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({email})
+            });
+
+            const data = await response.json().catch(()=>({}));
+
+            if(!response.ok || !data.success){
+                throw new Error(data.message || "Unable to send OTP. Please try again later.");
+            }
+
+            otpArea.classList.add("show");
+            resendBtn.classList.add("show");
+            sendBtn.textContent = "OTP Sent ✓";
+            fcShowMsg("OTP sent. Check your inbox (and Spam/Junk).", true);
+            otpInput.focus();
+
+            setTimeout(()=>{
+                sendBtn.disabled = false;
+                sendBtn.textContent = "Send OTP Again";
+            }, 60000);
+
+        }catch(error){
+            console.error("OTP error:", error);
+            fcShowMsg(error.message || "Unable to send OTP. Please try again later.", false);
+            sendBtn.disabled = false;
+            sendBtn.textContent = "Send OTP";
+        }finally{
+            resendBtn.disabled = false;
+        }
+    };
+
+    window.fcVerifyOtp = async function(){
+        const email = emailInput.value.trim().toLowerCase();
+        const otp = otpInput.value.trim();
+
+        if(!/^\d{6}$/.test(otp)){
+            fcShowMsg("Please enter the 6-digit OTP.", false);
+            otpInput.focus();
+            return;
+        }
+
+        verifyBtn.disabled = true;
+        verifyBtn.textContent = "Verifying...";
+        fcShowMsg("Verifying OTP...", true);
+
+        try{
+            const response = await fetch("/api/verify-otp", {
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({email, otp})
+            });
+
+            const data = await response.json().catch(()=>({}));
+
+            if(!response.ok || !data.success){
+                throw new Error(data.message || "Unable to verify OTP.");
+            }
+
+            sessionStorage.setItem("freshcartLoggedIn","true");
+            sessionStorage.setItem("freshcartLoginEmail", email);
+
+            gate.classList.add("hidden");
+            document.body.style.overflow = "";
+
+        }catch(error){
+            console.error("OTP verification error:", error);
+            fcShowMsg(error.message || "Unable to verify OTP.", false);
+            verifyBtn.disabled = false;
+            verifyBtn.textContent = "Verify & Continue";
+        }
+    };
+
+    if(sessionStorage.getItem("freshcartLoggedIn") === "true"){
+        gate.classList.add("hidden");
+    }else{
+        document.body.style.overflow = "hidden";
+        setTimeout(()=>emailInput.focus(), 100);
+    }
+
+    otpInput.addEventListener("input", function(){
+        this.value = this.value.replace(/\D/g,"").slice(0,6);
+    });
+
+    emailInput.addEventListener("keydown", function(e){
+        if(e.key === "Enter") fcSendOtp();
+    });
+
+    otpInput.addEventListener("keydown", function(e){
+        if(e.key === "Enter") fcVerifyOtp();
+    });
+})();
 </script>
 
 </body>
