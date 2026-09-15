@@ -1,7 +1,6 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-const crypto = require("crypto");
 
 const PORT = process.env.PORT || 3000;
 const ROOT = __dirname;
@@ -57,9 +56,7 @@ function validEmail(email) {
   );
 }
 
-function generateOtp() {
-  return String(crypto.randomInt(100000, 1000000));
-}
+/* ================= EMAIL ================= */
 
 async function sendEmail({ to, subject, html }) {
   if (!RESEND_API_KEY) {
@@ -107,45 +104,6 @@ const OTP_TTL = 10 * 60 * 1000;
 const OTP_COOLDOWN = 60 * 1000;
 const MAX_ATTEMPTS = 5;
 
-function otpEmail(otp) {
-  return {
-    subject: "FreshCart Login OTP",
-    html: `
-      <div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;padding:28px;color:#18251e">
-        <div style="text-align:center;font-size:30px;font-weight:800">
-          🛒 FreshCart
-        </div>
-
-        <h2 style="margin-top:28px">Your Login OTP</h2>
-
-        <p>Use the OTP below to securely sign in to FreshCart:</p>
-
-        <div style="
-          font-size:34px;
-          letter-spacing:8px;
-          font-weight:800;
-          text-align:center;
-          background:#f1faf4;
-          padding:20px;
-          border-radius:16px;
-          margin:22px 0
-        ">
-          ${otp}
-        </div>
-
-        <p style="color:#66736c">
-          This OTP expires in 10 minutes.
-          If you did not request it, you can safely ignore this email.
-        </p>
-
-        <p>FreshCart • Freshness delivered ❤️</p>
-      </div>
-    `
-  };
-}
-
-/* SEND OTP */
-
 async function handleSendOtp(req, res) {
   try {
     const body = await readBody(req);
@@ -174,32 +132,22 @@ async function handleSendOtp(req, res) {
       });
     }
 
-    const otp = generateOtp();
+    /* TEMPORARY OTP */
+    const otp = "123456";
 
-    const record = {
+    otpStore.set(email, {
       otp,
       sentAt: Date.now(),
       expiresAt: Date.now() + OTP_TTL,
       attempts: 0
-    };
+    });
 
-    otpStore.set(email, record);
-
-    try {
-      await sendEmail({
-        to: email,
-        ...otpEmail(otp)
-      });
-    } catch (error) {
-      otpStore.delete(email);
-      throw error;
-    }
-
-    console.log(`[OTP SENT] ${email}`);
+    console.log(`[TEMP OTP] ${email} -> 123456`);
 
     return sendJson(res, 200, {
       success: true,
-      message: "OTP sent successfully."
+      message: "Temporary OTP generated. Use 123456 to continue.",
+      temporaryOtp: "123456"
     });
 
   } catch (error) {
@@ -207,12 +155,10 @@ async function handleSendOtp(req, res) {
 
     return sendJson(res, 500, {
       success: false,
-      message: error.message || "Unable to send OTP."
+      message: error.message || "Unable to generate OTP."
     });
   }
 }
-
-/* VERIFY OTP */
 
 async function handleVerifyOtp(req, res) {
   try {
