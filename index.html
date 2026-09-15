@@ -3241,130 +3241,157 @@ button:active{
 
 
 /* =========================================================
-   FRESHCART OTP LOGIN
+   PREMIUM CHECKOUT UPGRADES
 ========================================================= */
-#fcLoginGate{
-    position:fixed;
-    inset:0;
-    z-index:99999;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    background:rgba(5,22,12,.62);
-    backdrop-filter:blur(14px);
+.premium-coupon-box{
+    margin:18px 0;
+    padding:18px;
+    border:1px solid #dcefe3;
+    border-radius:20px;
+    background:linear-gradient(145deg,#f5fff7,#fffdf4);
+    box-shadow:0 12px 30px rgba(24,169,87,.07);
+    position:relative;
+    overflow:hidden;
 }
-#fcLoginGate.hidden{display:none}
-.fc-login-box{
-    width:430px;
-    max-width:100%;
-    background:#fff;
-    border-radius:28px;
-    padding:34px 28px;
-    box-shadow:0 30px 90px rgba(0,0,0,.25);
-    text-align:center;
+.premium-coupon-box:before{
+    content:"";
+    position:absolute;
+    width:150px;height:150px;
+    right:-70px;top:-80px;
+    border-radius:50%;
+    background:rgba(161,233,103,.22);
 }
-.fc-login-logo{
-    width:58px;height:58px;margin:0 auto 15px;
-    display:grid;place-items:center;
-    border-radius:18px;
-    background:linear-gradient(135deg,#26c96b,#087f3e);
-    color:#fff;font-size:27px;
-    box-shadow:0 12px 28px rgba(24,169,87,.25);
+.coupon-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;position:relative;z-index:1}
+.coupon-eyebrow{font-size:8px;letter-spacing:1.8px;font-weight:900;color:#16964b}
+.coupon-title{font:800 16px "Manrope",sans-serif;margin-top:3px}
+.coupon-spark{width:34px;height:34px;display:grid;place-items:center;border-radius:12px;background:#e7f8dc;color:#159b4a;font-size:18px;animation:couponSpark 2s ease-in-out infinite}
+@keyframes couponSpark{50%{transform:rotate(12deg) scale(1.08);box-shadow:0 0 0 7px rgba(24,169,87,.06)}}
+.coupon-list{display:grid;gap:8px;position:relative;z-index:1}
+.coupon-offer{
+    width:100%;display:flex;align-items:center;gap:10px;text-align:left;
+    padding:10px;border:1px dashed #b9d8c4;border-radius:13px;background:rgba(255,255,255,.9);
+    transition:.25s;
 }
-.fc-login-box h2{
-    font-family:"Manrope",sans-serif;
-    font-size:25px;margin-bottom:7px;
+.coupon-offer:hover{transform:translateY(-2px);border-color:#18a957;box-shadow:0 8px 20px rgba(24,169,87,.09)}
+.coupon-offer .coupon-icon{width:31px;height:31px;display:grid;place-items:center;border-radius:10px;background:#eaf9ee;color:#159b4a;font-weight:900}
+.coupon-offer span:not(.coupon-icon){flex:1}
+.coupon-offer strong{display:block;font-size:10px;letter-spacing:.5px}
+.coupon-offer small{display:block;color:#7a877f;font-size:9px;margin-top:2px}
+.coupon-offer>b{font-size:9px;color:#159b4a}
+.coupon-input-row{display:flex;gap:8px;margin-top:11px;position:relative;z-index:1}
+.coupon-input-row input{flex:1;padding:12px;border:1px solid #d7e4db;border-radius:11px;outline:none;background:#fff;font-size:11px;text-transform:uppercase}
+.coupon-input-row input:focus{border-color:#18a957;box-shadow:0 0 0 4px rgba(24,169,87,.08)}
+.coupon-input-row button{padding:11px 16px;border:0;border-radius:11px;background:linear-gradient(135deg,#22bd63,#087b3d);color:#fff;font-weight:900;font-size:10px;box-shadow:0 8px 18px rgba(24,169,87,.18)}
+.coupon-note{font-size:8px;color:#7b877f;margin-top:8px}
+.coupon-message{font-size:10px;font-weight:800;margin-top:7px;min-height:13px}
+.free-delivery-hint{
+    display:none;margin:9px 0 12px;padding:11px 12px;border-radius:13px;
+    background:linear-gradient(135deg,#fff8df,#f4ffe9);border:1px solid #e7e5bd;
+    color:#6c5b17;font-size:10px;font-weight:800;line-height:1.5;
 }
-.fc-login-box p{
-    color:#748078;font-size:12px;line-height:1.6;margin-bottom:22px;
+.free-delivery-hint.show{display:block;animation:hintIn .35s ease}
+.free-delivery-hint.unlocked{background:linear-gradient(135deg,#eaffef,#f5ffe9);border-color:#ccebd5;color:#14783f}
+@keyframes hintIn{from{opacity:0;transform:translateY(-5px);max-height:0}to{opacity:1;transform:translateY(0);max-height:80px}}
+.tax-detail{font-size:8px;color:#9aa59e}
+.customer-care{
+    display:flex;align-items:center;gap:10px;margin-top:15px;padding:12px;
+    border:1px solid #e5ece7;border-radius:15px;background:linear-gradient(135deg,#fbfffc,#f5faf6);
 }
-#fcLoginEmail{
-    width:100%;padding:14px;
-    border:1px solid #dfe7e1;border-radius:13px;
-    outline:none;background:#fbfdfb;font-size:13px;
+.care-icon{width:35px;height:35px;display:grid;place-items:center;border-radius:11px;background:#e8f8ed;font-size:17px}
+.care-copy{flex:1}.care-copy strong{display:block;font-size:10px}.care-copy span{display:block;font-size:8px;color:#7c8881;margin-top:3px}
+.customer-care button{border:1px solid #cfe4d5;background:#fff;color:#148a46;border-radius:9px;padding:8px 10px;font-size:9px;font-weight:900}
+.coupon-pop{
+    position:fixed;inset:0;z-index:9500;pointer-events:none;display:grid;place-items:center;
 }
-#fcLoginEmail:focus{
-    border-color:#19a957;
-    box-shadow:0 0 0 4px rgba(25,169,87,.08);
-    background:#fff;
+.coupon-pop-card{
+    padding:18px 24px;border-radius:20px;background:rgba(16,32,25,.96);color:#fff;
+    box-shadow:0 25px 80px rgba(0,0,0,.25);text-align:center;
+    animation:couponPop .8s cubic-bezier(.2,.9,.2,1) forwards;
 }
-#fcSendOtp{
-    width:100%;margin-top:12px;padding:14px;
-    border:0;border-radius:13px;
-    background:linear-gradient(135deg,#1bbb60,#087b3d);
-    color:#fff;font-weight:800;font-size:13px;
+.coupon-pop-card strong{display:block;font:800 18px "Manrope",sans-serif;color:#b8f58b}
+.coupon-pop-card span{font-size:10px;opacity:.82}
+@keyframes couponPop{0%{opacity:0;transform:scale(.65) translateY(15px)}45%{opacity:1;transform:scale(1.08)}100%{opacity:0;transform:scale(1) translateY(-20px)}}
+@media(max-width:600px){
+    .premium-coupon-box{padding:14px;border-radius:17px}
+    .coupon-offer{padding:9px}
+    .coupon-input-row button{padding-inline:13px}
+    .customer-care{align-items:flex-start}
 }
-#fcOtpArea{display:none;margin-top:15px}
-#fcOtpArea.show{display:block}
-#fcOtp{
-    width:100%;padding:14px;
-    border:1px solid #dfe7e1;border-radius:13px;
-    outline:none;text-align:center;
-    letter-spacing:7px;font-size:22px;font-weight:800;
-}
-#fcVerifyOtp{
-    width:100%;margin-top:12px;padding:14px;
-    border:0;border-radius:13px;background:#102019;
-    color:#fff;font-weight:800;
-}
-#fcLoginMsg{
-    min-height:18px;margin-top:12px;
-    font-size:11px;color:#e04c4c;
-}
-#fcResendOtp{
-    border:0;background:transparent;color:#13984b;
-    font-size:11px;font-weight:800;margin-top:8px;
-    display:none;
-}
-#fcResendOtp.show{display:inline-block}
 
+
+/* ================= FRESHCART V2 PREMIUM UX ================= */
+:root{--fc-green:#159b4a;--fc-dark:#102019;--fc-soft:#eef9f1;--fc-border:#e4ece6;--fc-gold:#f4b73f}
+.product{transition:transform .25s ease,box-shadow .25s ease}.product:hover{transform:translateY(-7px);box-shadow:0 18px 45px rgba(16,32,25,.10)}
+.product-img{position:relative;overflow:hidden}.product-img img{transition:transform .45s ease}.product:hover .product-img img{transform:scale(1.05)}
+.product .heart{z-index:3}
+.quick-actions{display:flex;gap:10px;margin:18px 0;flex-wrap:wrap}.quick-chip{border:1px solid var(--fc-border);background:#fff;padding:10px 14px;border-radius:14px;font-weight:700;font-size:12px;color:#526057;box-shadow:0 5px 18px rgba(16,32,25,.05);transition:.2s}.quick-chip:hover{transform:translateY(-2px);border-color:#b9dfc5;color:var(--fc-green)}
+.search-suggestions{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}.search-suggestions button{border:0;background:#f0f7f2;padding:8px 11px;border-radius:10px;font-size:11px;font-weight:700;color:#39704d}
+.smart-sort{display:flex;align-items:center;justify-content:space-between;margin:0 0 18px;gap:12px}.smart-sort select{border:1px solid var(--fc-border);border-radius:12px;padding:10px 12px;background:#fff;color:#405047;font-weight:700}
+.product-meta{display:flex;gap:7px;align-items:center;margin:8px 0;font-size:10px}.stock-low{color:#d06d00;font-weight:800}.fresh-tag{color:#17894a;background:#eaf8ef;padding:4px 7px;border-radius:7px;font-weight:800}
+.recent-section,.feature-strip{max-width:1250px;margin:40px auto;padding:0 25px}.recent-section h3,.feature-strip h3{font-family:Manrope,sans-serif;font-size:22px;margin-bottom:14px}.recent-grid{display:flex;gap:14px;overflow:auto;padding-bottom:8px}.recent-card{min-width:180px;background:#fff;border:1px solid var(--fc-border);border-radius:18px;padding:10px;box-shadow:0 8px 25px rgba(16,32,25,.05)}.recent-card img{width:100%;height:105px;object-fit:cover;border-radius:13px}.recent-card strong{display:block;font-size:12px;margin:8px 0}.recent-card button{width:100%;border:0;background:var(--fc-green);color:#fff;padding:9px;border-radius:10px;font-weight:800}
+.feature-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.feature-box{background:#fff;border:1px solid var(--fc-border);border-radius:20px;padding:18px;box-shadow:0 8px 25px rgba(16,32,25,.04)}.feature-box b{display:block;margin:7px 0 4px}.feature-box span{font-size:11px;color:#7a857e}
+.wishlist-drawer,.account-modal,.tracking-modal,.care-modal{position:fixed;inset:0;background:rgba(10,20,14,.45);backdrop-filter:blur(7px);z-index:10000;display:none;align-items:center;justify-content:center;padding:18px}.wishlist-drawer.show,.account-modal.show,.tracking-modal.show,.care-modal.show{display:flex}.modal-card{width:min(720px,100%);max-height:88vh;overflow:auto;background:#fff;border-radius:28px;padding:25px;box-shadow:0 30px 90px rgba(0,0,0,.22);animation:modalIn .3s ease}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-head h2{font-family:Manrope,sans-serif}.modal-close{border:0;background:#f1f5f2;border-radius:12px;width:38px;height:38px;font-size:18px}.wish-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.wish-card{border:1px solid var(--fc-border);border-radius:18px;padding:10px;display:grid;grid-template-columns:70px 1fr;gap:10px;align-items:center}.wish-card img{width:70px;height:70px;object-fit:cover;border-radius:12px}.wish-card button{border:0;background:var(--fc-green);color:white;border-radius:9px;padding:7px 10px;font-size:11px;font-weight:800;margin-top:6px}
+.track-id{background:#f3f8f4;border-radius:15px;padding:13px;font-weight:800;margin-bottom:20px}.track-line{display:flex;gap:15px}.track-step{flex:1;text-align:center;position:relative}.track-step:before{content:"";display:block;width:18px;height:18px;border-radius:50%;background:#dce8df;margin:0 auto 10px;border:4px solid #fff;box-shadow:0 0 0 2px #dce8df}.track-step.active:before{background:var(--fc-green);box-shadow:0 0 0 2px #bce6c9}.track-step span{font-size:11px;font-weight:800;color:#68756d}.track-step.active span{color:var(--fc-green)}
+.care-options{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.care-option{padding:18px;border:1px solid var(--fc-border);border-radius:18px;background:#fbfdfb}.care-option b{display:block;margin-bottom:5px}.care-option span{font-size:11px;color:#76827b}.care-option button{margin-top:12px;border:0;background:#eaf8ef;color:#158548;border-radius:10px;padding:9px 12px;font-weight:800}
+.bottom-nav{display:none}
+.empty-state-pro{text-align:center;padding:35px 10px}.empty-state-pro .big{font-size:48px;margin-bottom:10px}.empty-state-pro button{border:0;background:var(--fc-green);color:white;padding:11px 17px;border-radius:12px;font-weight:800;margin-top:14px}
+.saving-badge{display:inline-flex;align-items:center;gap:5px;background:#fff6d9;color:#9b6900;border-radius:9px;padding:5px 8px;font-size:10px;font-weight:800;margin-top:8px}
+@keyframes modalIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+@media(max-width:760px){.feature-strip{grid-template-columns:repeat(2,1fr);padding:0 15px}.recent-section{padding:0 15px}.wish-grid,.care-options{grid-template-columns:1fr}.smart-sort{align-items:flex-start;flex-direction:column}.bottom-nav{display:flex;position:fixed;left:10px;right:10px;bottom:10px;z-index:9000;background:rgba(255,255,255,.94);backdrop-filter:blur(15px);border:1px solid #dfe9e2;border-radius:20px;padding:7px;justify-content:space-around;box-shadow:0 14px 40px rgba(0,0,0,.14)}.bottom-nav button{border:0;background:transparent;padding:8px 10px;border-radius:12px;color:#5f6c64;font-size:10px;font-weight:800}.bottom-nav button span{display:block;font-size:18px;margin-bottom:2px}.bottom-nav button:active{background:#eaf8ef}.modal-card{padding:18px;border-radius:22px}}
+
+
+.wishlist-section{max-width:1200px;margin:28px auto 60px;padding:28px;border-radius:24px;background:rgba(255,255,255,.9);box-shadow:0 16px 45px rgba(24,70,45,.09);border:1px solid rgba(32,105,67,.10)}
+.wishlist-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px}
+.wishlist-head h2{margin:5px 0;font-size:30px}.wishlist-head p{margin:0;color:#6b7c72}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:1.5px;color:#23844e}
+.wishlist-clear{border:1px solid #d7e5dc;background:#fff;border-radius:12px;padding:10px 15px;font-weight:700;cursor:pointer}
+.wishlist-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.wishlist-card{position:relative;border:1px solid #e7eee9;border-radius:18px;padding:14px;background:#fff;overflow:hidden}
+.wishlist-card img{width:100%;height:155px;object-fit:contain;border-radius:14px;background:#f7faf8}
+.wishlist-card h3{font-size:15px;margin:12px 0 6px}.wishlist-price{font-weight:800;font-size:18px}.wishlist-remove{position:absolute;right:12px;top:12px;border:0;background:#fff;border-radius:50%;width:34px;height:34px;box-shadow:0 4px 14px #0001;cursor:pointer;font-size:17px}
+.wishlist-add{width:100%;margin-top:10px;border:0;border-radius:12px;padding:10px;background:#1f8b4c;color:#fff;font-weight:800;cursor:pointer}
+.wishlist-empty{text-align:center;padding:42px 20px;color:#68776f}.wishlist-empty-icon{font-size:58px;color:#9aafa2}.wishlist-empty h3{margin:5px 0 6px;color:#24352c}.wishlist-empty button{margin-top:12px;border:0;border-radius:12px;padding:11px 18px;background:#1f8b4c;color:#fff;font-weight:800}
+@media(max-width:800px){.wishlist-section{margin:20px 12px 40px;padding:18px}.wishlist-grid{grid-template-columns:repeat(2,1fr);gap:12px}.wishlist-card img{height:125px}.wishlist-head h2{font-size:24px}}
+
+.fc-login-gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,rgba(8,35,22,.96),rgba(25,100,58,.94));backdrop-filter:blur(12px)}
+.fc-login-card{width:min(430px,100%);background:#fff;border-radius:28px;padding:34px;box-shadow:0 30px 80px #0005;text-align:center}.fc-login-logo{width:64px;height:64px;margin:0 auto 15px;display:grid;place-items:center;border-radius:20px;background:#e9f8ee;font-size:31px}.fc-login-kicker{font-size:11px;font-weight:900;letter-spacing:1.5px;color:#25834d}.fc-login-card h1{margin:7px 0;font-size:30px;color:#183326}.fc-login-card p{color:#6d7b73;margin:0 0 22px}.fc-login-card label{display:block;text-align:left;font-size:13px;font-weight:800;margin:0 0 7px;color:#30453a}.fc-login-card input{width:100%;box-sizing:border-box;padding:14px 15px;border:1px solid #d8e5dc;border-radius:13px;font-size:16px;outline:none;margin-bottom:12px}.fc-login-card input:focus{border-color:#238b50;box-shadow:0 0 0 4px #238b5015}.fc-login-card button{width:100%;border:0;border-radius:13px;padding:14px;background:#21894d;color:#fff;font-weight:900;font-size:15px;cursor:pointer}.fc-login-card .fc-back{margin-top:8px;background:#eef5f0;color:#246a43}.fc-login-note{margin-top:18px;font-size:11px;color:#849189}.fc-login-card small{display:block;margin-top:10px;color:#718078}.fc-login-error{color:#c0392b;font-weight:700;margin-top:10px}.fc-login-ok{color:#21894d;font-weight:700;margin-top:10px}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
 
 <body>
+<div id="fcLoginGate" class="fc-login-gate">
+ <div class="fc-login-card">
+  <div class="fc-login-logo">🛒</div>
+  <div class="fc-login-kicker">WELCOME TO FRESHCART</div>
+  <h1>Shop fresh. Live better.</h1>
+  <p id="fcLoginSub">Enter your email or phone number to continue.</p>
 
-<!-- =========================================================
-     FRESHCART OTP LOGIN GATE
-========================================================= -->
-<div id="fcLoginGate">
-    <div class="fc-login-box">
-        <div class="fc-login-logo">🛒</div>
-        <h2>Welcome to FreshCart</h2>
-        <p>Sign in with your email to continue shopping securely.</p>
+  <div id="fcLoginStep1">
+   <label>Email or phone number</label>
+   <input id="fcLoginIdentity" type="text" placeholder="you@example.com or 10-digit mobile" autocomplete="email tel">
+   <button type="button" onclick="fcSendOTP()">Send OTP →</button>
+  </div>
 
-        <input
-            id="fcLoginEmail"
-            type="email"
-            autocomplete="email"
-            placeholder="Enter your email address">
+  <div id="fcLoginStepEmail" style="display:none">
+   <label>Email for OTP</label>
+   <input id="fcLoginOtpEmail" type="email" placeholder="you@example.com" autocomplete="email">
+   <button type="button" onclick="fcSendPhoneOTP()">Send OTP to Email →</button>
+   <button type="button" class="fc-back" onclick="fcBackLogin()">← Change email/phone</button>
+  </div>
 
-        <button id="fcSendOtp" type="button" onclick="fcSendOtp()">
-            Send OTP
-        </button>
+  <div id="fcLoginStep2" style="display:none">
+   <label>Enter 6-digit OTP</label>
+   <input id="fcLoginOTP" inputmode="numeric" maxlength="6" placeholder="6-digit OTP" autocomplete="one-time-code">
+   <button type="button" onclick="fcVerifyOTP()">Verify & Enter FreshCart</button>
+   <button type="button" class="fc-back" onclick="fcBackLogin()">← Change email/phone</button>
+   <small id="fcOtpHint"></small>
+  </div>
 
-        <div id="fcOtpArea">
-            <input
-                id="fcOtp"
-                type="text"
-                inputmode="numeric"
-                maxlength="6"
-                autocomplete="one-time-code"
-                placeholder="Enter 6-digit OTP">
-
-            <button id="fcVerifyOtp" type="button" onclick="fcVerifyOtp()">
-                Verify & Continue
-            </button>
-
-            <button id="fcResendOtp" type="button" onclick="fcSendOtp()">
-                Resend OTP
-            </button>
-        </div>
-
-        <div id="fcLoginMsg"></div>
-    </div>
+  <div id="fcLoginMsg"></div>
+  <div class="fc-login-note">🔒 OTP expires in 10 minutes. Your login is protected.</div>
+ </div>
 </div>
 
 
@@ -3864,7 +3891,17 @@ button:active{
 
 </section>
 
+<div class="feature-strip">
+  <div class="feature-box">🛡️<b>Quality Assured</b><span>Fresh products, carefully selected.</span></div>
+  <div class="feature-box">🚚<b>Fast Delivery</b><span>Reliable doorstep delivery.</span></div>
+  <div class="feature-box">💰<b>Best Prices</b><span>Deals designed to save more.</span></div>
+  <div class="feature-box">🔒<b>Secure Checkout</b><span>Your order details stay protected.</span></div>
+</div>
 
+<section class="recent-section" id="recentSection" style="display:none;">
+  <h3>Recently viewed 👀</h3>
+  <div class="recent-grid" id="recentGrid"></div>
+</section>
 
 <!-- SALE -->
 
@@ -4074,7 +4111,7 @@ button:active{
 
         <input
             id="emailInput"
-            type="email"
+            type="email" pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
             placeholder="Enter your email">
 
         <button type="submit">
@@ -4096,6 +4133,25 @@ button:active{
 
 
 <!-- FOOTER -->
+
+
+<section id="wishlistSection" class="wishlist-section" style="display:none;">
+  <div class="wishlist-head">
+    <div>
+      <span class="eyebrow">YOUR SAVED PICKS</span>
+      <h2>❤️ My Wishlist</h2>
+      <p>Products you love, saved for later.</p>
+    </div>
+    <button class="wishlist-clear" type="button" onclick="clearWishlist()">Clear all</button>
+  </div>
+  <div id="wishlistGrid" class="wishlist-grid"></div>
+  <div id="wishlistEmpty" class="wishlist-empty">
+    <div class="wishlist-empty-icon">♡</div>
+    <h3>Your wishlist is empty</h3>
+    <p>Tap the heart on any product to save it here.</p>
+    <button type="button" onclick="document.getElementById('products')?.scrollIntoView({behavior:'smooth'})">Start shopping</button>
+  </div>
+</section>
 
 <footer>
 
@@ -4450,8 +4506,10 @@ button:active{
                             <input
                                 id="customerEmail"
                                 type="email"
+                                required
+                                pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
                                 autocomplete="email"
-                                placeholder="you@example.com">
+                                placeholder="you@example.com" inputmode="email">
 
                             <span
                                 class="field-error"
@@ -5085,6 +5143,34 @@ button:active{
                 </div>
 
 
+                <div class="coupon-box premium-coupon-box">
+                    <div class="coupon-head">
+                        <div>
+                            <div class="coupon-eyebrow">EXCLUSIVE SAVINGS</div>
+                            <div class="coupon-title">🎟️ Coupons & Offers</div>
+                        </div>
+                        <span class="coupon-spark">✦</span>
+                    </div>
+                    <div class="coupon-list">
+                        <button type="button" class="coupon-offer" onclick="useCoupon('FIRST100')">
+                            <span class="coupon-icon">₹</span>
+                            <span><strong>FIRST100</strong><small>First order • ₹100 OFF</small></span>
+                            <b>Apply</b>
+                        </button>
+                        <button type="button" class="coupon-offer" onclick="useCoupon('SECOND50')">
+                            <span class="coupon-icon">₹</span>
+                            <span><strong>SECOND50</strong><small>Second order • ₹50 OFF</small></span>
+                            <b>Apply</b>
+                        </button>
+                    </div>
+                    <div class="coupon-input-row">
+                        <input id="couponInput" type="text" placeholder="Enter coupon code" autocomplete="off" maxlength="20">
+                        <button type="button" onclick="applyCoupon()">Apply</button>
+                    </div>
+                    <div class="coupon-note">Minimum order value ₹199 • One coupon per order</div>
+                    <div id="couponMessage" class="coupon-message"></div>
+                </div>
+
                 <div class="summary-lines">
 
 
@@ -5114,6 +5200,25 @@ button:active{
                     </div>
 
 
+                    <div id="freeDeliveryHint" class="free-delivery-hint"></div>
+
+                    <div class="summary-line">
+
+                        <span>Platform Fee</span>
+
+                        <span id="summaryPlatformFee">₹10</span>
+
+                    </div>
+
+                    <div class="summary-line">
+
+                        <span>GST & Taxes <small class="tax-detail">(18%)</small></span>
+
+                        <span id="summaryTax">₹0</span>
+
+                    </div>
+
+
                     <div class="summary-line">
 
                         <span>
@@ -5131,6 +5236,11 @@ button:active{
                     </div>
 
 
+                    <div class="summary-line" id="couponDiscountRow" style="display:none;">
+                        <span>Coupon Discount</span>
+                        <span style="color:#159b4a;" id="summaryCouponDiscount">-₹0</span>
+                    </div>
+
                     <div class="summary-line total-line">
 
                         <span>
@@ -5145,6 +5255,15 @@ button:active{
 
                 </div>
 
+
+                <div class="customer-care">
+                    <div class="care-icon">💬</div>
+                    <div class="care-copy">
+                        <strong>Need help with your order?</strong>
+                        <span>FreshCart Customer Care • We're here to help</span>
+                    </div>
+                    <button type="button" onclick="openCare()">Help</button>
+                </div>
 
                 <div class="secure">
 
@@ -5177,7 +5296,7 @@ button:active{
     <div class="progress-box">
         <div class="progress-spinner"></div>
         <h3>Placing your FreshCart order…</h3>
-        <p>Confirming your order and sending your SMS notification.</p>
+        <p>Confirming your order and sending your email confirmation.</p>
     </div>
 </div>
 
@@ -5392,98 +5511,28 @@ let cart=[];
 ========================================================= */
 
 function displayProducts(list){
-
     const grid=document.getElementById("productGrid");
-
     grid.innerHTML="";
-
-
+    if(!list.length){
+        grid.innerHTML=`<div class="empty-state-pro" style="grid-column:1/-1"><div class="big">🔎</div><strong>No products found</strong><p style="color:#7a857e;margin-top:5px">Try fruits, dairy, snacks or a different name.</p><button onclick="displayProducts(products)">Show all products</button></div>`;
+        return;
+    }
     list.forEach(product=>{
-
-        grid.innerHTML+=`
-
-        <article class="product">
-
-            <div class="product-img">
-
-                <img
-                    src="${product.image}"
-                    alt="${product.name}">
-
-                <span class="discount">
-                    ${product.discount}
-                </span>
-
-                <button
-                    class="heart"
-                    onclick="toggleHeart(this)">
-
-                    ♡
-
-                </button>
-
-            </div>
-
-
-            <div class="product-info">
-
-                <span class="product-category">
-                    ${product.category}
-                </span>
-
-                <h3>
-                    ${product.name}
-                </h3>
-
-
-                <div class="rating">
-
-                    ★★★★★
-
-                    <span>
-                        ${product.rating}
-                    </span>
-
-                </div>
-
-
-                <div class="product-bottom">
-
-                    <div>
-
-                        <span class="price">
-                            ₹${product.price}
-                        </span>
-
-                        <span class="old-price">
-                            ₹${product.old}
-                        </span>
-
-                    </div>
-
-
-                    <button
-                        class="add"
-                        onclick="addToCart(${product.id},this)">
-
-                        +
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-        `;
-
+        const saved=JSON.parse(localStorage.getItem("freshcartWishlist")||"[]").includes(product.id);
+        const recent=JSON.parse(localStorage.getItem("freshcartRecent")||"[]").includes(product.id);
+        const low=product.id%4===0;
+        grid.innerHTML+=`<article class="product" onclick="rememberProduct(${product.id})">
+            <div class="product-img"><img src="${product.image}" alt="${product.name}"><span class="discount">${product.discount}</span>
+            <button class="heart" onclick="event.stopPropagation();toggleHeart(this,${product.id})">${saved?'♥':'♡'}</button></div>
+            <div class="product-info"><span class="product-category">${product.category}</span><h3>${product.name}</h3>
+            <div class="rating">★★★★★ <span>${product.rating}</span></div>
+            <div class="product-meta"><span class="fresh-tag">✓ Fresh pick</span>${low?'<span class="stock-low">Only few left</span>':''}</div>
+            <div class="product-bottom"><div><span class="price">₹${product.price}</span><span class="old-price">₹${product.old}</span><div class="saving-badge">Save ₹${product.old-product.price}</div></div>
+            <button class="add" onclick="event.stopPropagation();addToCart(${product.id},this)">+</button></div></div></article>`;
     });
-
 }
-
-
 displayProducts(products);
+renderRecent();
 
 
 /* =========================================================
@@ -5819,95 +5868,59 @@ function backToStore(){
 
 function updateSummary(){
 
-    const box=
-        document.getElementById(
-            "summaryItems"
-        );
-
+    const box=document.getElementById("summaryItems");
     box.innerHTML="";
 
-
     cart.forEach(item=>{
-
         box.innerHTML+=`
-
         <div class="summary-item">
-
             <img src="${item.image}">
-
             <div class="summary-item-info">
-
-                <strong>
-                    ${item.name}
-                </strong>
-
-                <small>
-                    Qty: ${item.quantity}
-                </small>
-
+                <strong>${item.name}</strong>
+                <small>Qty: ${item.quantity}</small>
             </div>
-
-            <div class="summary-item-price">
-
-                ₹${item.price*item.quantity}
-
-            </div>
-
-        </div>
-
-        `;
-
+            <div class="summary-item-price">₹${item.price*item.quantity}</div>
+        </div>`;
     });
 
+    const pricing=getPricing();
 
-    const subtotal=
-        cart.reduce(
-            (sum,p)=>
-                sum+p.price*p.quantity,
-            0
-        );
+    document.getElementById("summarySubtotal").textContent="₹"+pricing.subtotal;
+    document.getElementById("summaryDelivery").textContent=pricing.delivery===0 ? "FREE" : "₹"+pricing.delivery;
+    document.getElementById("summaryPlatformFee").textContent="₹"+pricing.platformFee;
+    document.getElementById("summaryTax").textContent="₹"+pricing.tax;
+    document.getElementById("summaryDiscount").textContent="-₹"+pricing.discount;
 
+    const couponRow=document.getElementById("couponDiscountRow");
+    const couponValue=document.getElementById("summaryCouponDiscount");
+    if(pricing.couponDiscount>0){
+        couponRow.style.display="flex";
+        couponValue.textContent="-₹"+pricing.couponDiscount;
+    }else{
+        couponRow.style.display="none";
+        couponValue.textContent="-₹0";
+    }
 
-    const discount=
-        Math.round(subtotal*.05);
+    const hint=document.getElementById("freeDeliveryHint");
+    if(hint){
+        if(pricing.subtotal>=249){
+            hint.className="free-delivery-hint show unlocked";
+            hint.innerHTML="🎉 <strong>Free delivery unlocked!</strong> You're saving ₹40 on delivery.";
+        }else if(pricing.subtotal>0){
+            hint.className="free-delivery-hint show";
+            hint.innerHTML=`🚚 Add items worth <strong>₹${249-pricing.subtotal}</strong> more to unlock <strong>FREE delivery</strong>.`;
+        }else{
+            hint.className="free-delivery-hint";
+            hint.innerHTML="";
+        }
+    }
 
-
-    const delivery=
-        subtotal>=499 ? 0 : 40;
-
-
-    const total=
-        subtotal-discount+delivery;
-
-
-    document.getElementById(
-        "summarySubtotal"
-    ).textContent="₹"+subtotal;
-
-
-    document.getElementById(
-        "summaryDelivery"
-    ).textContent=
-        delivery===0
-        ? "FREE"
-        : "₹"+delivery;
-
-
-    document.getElementById(
-        "summaryDiscount"
-    ).textContent="-₹"+discount;
-
-
-    document.getElementById(
-        "summaryTotal"
-    ).textContent="₹"+total;
+    document.getElementById("summaryTotal").textContent="₹"+pricing.total;
 
     if(document.getElementById("upiForm")?.classList.contains("active")){
         setTimeout(generateUpiQr,50);
     }
-
 }
-
 
 /* =========================================================
    PINCODE DELIVERY ESTIMATION
@@ -6017,11 +6030,113 @@ async function calculateDelivery(){
 const FRESHCART_UPI_ID = "YOUR_UPI_ID@upi";
 const FRESHCART_UPI_NAME = "FreshCart";
 
-function getOrderTotal(){
+let appliedCoupon=localStorage.getItem("freshcartAppliedCoupon") || "";
+
+function getOrderCount(){
+    return Number(localStorage.getItem("freshcartOrderCount") || 0);
+}
+
+function getCouponDiscount(subtotal){
+    if(subtotal < 199) return 0;
+    if(appliedCoupon==="FIRST100" && getOrderCount()===0) return Math.min(100, subtotal);
+    if(appliedCoupon==="SECOND50" && getOrderCount()===1) return Math.min(50, subtotal);
+    return 0;
+}
+
+function getPricing(){
     const subtotal=cart.reduce((sum,p)=>sum+p.price*p.quantity,0);
     const discount=Math.round(subtotal*.05);
-    const delivery=subtotal>=499 ? 0 : 40;
-    return subtotal-discount+delivery;
+    const couponDiscount=getCouponDiscount(subtotal);
+    const platformFee=10;
+    const taxable=Math.max(0, subtotal-discount-couponDiscount+platformFee);
+    const tax=Math.round(taxable*.18);
+    const delivery=subtotal>=249 ? 0 : 40;
+    const total=Math.max(0, taxable+tax+delivery);
+    return {subtotal,discount,couponDiscount,platformFee,taxable,tax,delivery,total};
+}
+
+function triggerCouponAnimation(code,saved){
+    const pop=document.createElement("div");
+    pop.className="coupon-pop";
+    pop.innerHTML=`<div class="coupon-pop-card"><strong>🎉 ₹${saved} SAVED!</strong><span>${code} applied successfully</span></div>`;
+    document.body.appendChild(pop);
+    for(let i=0;i<36;i++){
+        const piece=document.createElement("span");
+        piece.className="confetti";
+        piece.style.left="50%"; piece.style.top="50%";
+        piece.style.setProperty("--cx",(Math.random()*520-260)+"px");
+        piece.style.setProperty("--cy",(Math.random()*420-210)+"px");
+        piece.style.animationDelay=(Math.random()*.15)+"s";
+        piece.style.width=(4+Math.random()*5)+"px";
+        piece.style.height=(6+Math.random()*8)+"px";
+        piece.style.background=["#18a957","#ffcc4d","#ff6b6b","#6ecbff","#a879ff"][Math.floor(Math.random()*5)];
+        document.body.appendChild(piece);
+        setTimeout(()=>piece.remove(),1900);
+    }
+    setTimeout(()=>pop.remove(),850);
+}
+
+function useCoupon(code){
+    document.getElementById("couponInput").value=code;
+    applyCoupon();
+}
+
+function applyCoupon(){
+    const input=document.getElementById("couponInput");
+    const message=document.getElementById("couponMessage");
+    const code=input.value.trim().toUpperCase();
+    const orderCount=getOrderCount();
+    const subtotal=cart.reduce((sum,p)=>sum+p.price*p.quantity,0);
+
+    if(subtotal<199){
+        appliedCoupon="";
+        localStorage.removeItem("freshcartAppliedCoupon");
+        message.textContent=`Add ₹${199-subtotal} more to unlock coupons.`;
+        message.style.color="#b06a00";
+        updateSummary();
+        return;
+    }
+
+    if(!code){
+        message.textContent="Please enter a coupon code.";
+        message.style.color="#d33";
+        return;
+    }
+
+    if(code==="FIRST100" && orderCount===0){
+        appliedCoupon=code;
+    }else if(code==="SECOND50" && orderCount===1){
+        appliedCoupon=code;
+    }else if(code==="FIRST100" && orderCount>0){
+        appliedCoupon="";
+        message.textContent="FIRST100 is only valid on your first order.";
+        message.style.color="#d33";
+        updateSummary();
+        return;
+    }else if(code==="SECOND50" && orderCount!==1){
+        appliedCoupon="";
+        message.textContent=orderCount===0 ? "SECOND50 unlocks after your first order." : "SECOND50 is only valid on your second order.";
+        message.style.color="#d33";
+        updateSummary();
+        return;
+    }else{
+        appliedCoupon="";
+        message.textContent="Invalid coupon code.";
+        message.style.color="#d33";
+        updateSummary();
+        return;
+    }
+
+    localStorage.setItem("freshcartAppliedCoupon",appliedCoupon);
+    const savedDiscount=getCouponDiscount(subtotal);
+    message.textContent=`${appliedCoupon} applied! You saved ₹${savedDiscount}.`;
+    message.style.color="#159b4a";
+    updateSummary();
+    triggerCouponAnimation(appliedCoupon,savedDiscount);
+}
+
+function getOrderTotal(){
+    return getPricing().total;
 }
 
 function generateUpiQr(){
@@ -6213,14 +6328,16 @@ async function placeOrder(){
         valid=false;
     }
 
-    if(!valid){
-        showToast("Please complete your delivery details ⚠️");
+    const pricing=getPricing();
+
+    if(pricing.subtotal < 199){
+        showToast(`Minimum order value is ₹199. Add ₹${199-pricing.subtotal} more.`);
         return;
     }
 
     const paymentOption=document.querySelector(".payment-option.active strong")?.textContent?.trim() || "Online Payment";
     const orderId="FC"+Math.floor(100000+Math.random()*900000);
-    const total=getOrderTotal();
+    const total=pricing.total;
 
     const categories=[...new Set(cart.map(item=>item.category))];
 
@@ -6239,6 +6356,13 @@ async function placeOrder(){
             pincode:pin.value.trim()
         },
         payment:paymentOption,
+        coupon:appliedCoupon || null,
+        couponDiscount:pricing.couponDiscount,
+        subtotal:pricing.subtotal,
+        itemDiscount:pricing.discount,
+        platformFee:pricing.platformFee,
+        tax:pricing.tax,
+        deliveryFee:pricing.delivery,
         total,
         itemCount:cart.reduce((sum,item)=>sum+item.quantity,0),
         categories,
@@ -6266,6 +6390,12 @@ async function placeOrder(){
         }
 
         document.getElementById("orderProgress").classList.remove("show");
+        localStorage.setItem("freshcartOrderCount", String(getOrderCount()+1));
+        localStorage.removeItem("freshcartAppliedCoupon");
+        localStorage.setItem("freshcartLastOrder",JSON.stringify({orderId,total,items:orderData.items,createdAt:new Date().toISOString()}));
+        localStorage.setItem("freshcartRecent",JSON.stringify(orderData.items.map(x=>products.find(p=>p.name===x.name)?.id).filter(Boolean)));
+        appliedCoupon="";
+        renderRecent();
         showSuccess(orderId, result.emailSent===true);
 
     }catch(error){
@@ -6361,6 +6491,9 @@ function closeSearch(e){
 }
 
 
+function quickSearch(q){document.getElementById("searchInput").value=q;const results=products.filter(p=>(p.name+" "+p.category).toLowerCase().includes(q));displayProducts(results);document.getElementById("products").scrollIntoView({behavior:"smooth"})}
+function sortProducts(type){let list=[...products];if(type==="low")list.sort((a,b)=>a.price-b.price);if(type==="high")list.sort((a,b)=>b.price-a.price);if(type==="discount")list.sort((a,b)=>(b.old-b.price)/b.old-(a.old-a.price)/a.old);displayProducts(list)}
+
 function searchProducts(){
 
     const query=
@@ -6412,43 +6545,26 @@ function searchProducts(){
    WISHLIST
 ========================================================= */
 
-function toggleHeart(button){
-
-    if(
-        button.textContent.trim()==="♡"
-    ){
-
-        button.textContent="♥";
-
-        button.style.color="#ff4e5b";
-
-        button.style.transform="scale(1.3)";
-
-        showToast(
-            "Added to wishlist ❤️"
-        );
-
-
-        setTimeout(()=>{
-
-            button.style.transform="";
-
-        },300);
-
-    }else{
-
-        button.textContent="♡";
-
-        button.style.color="";
-
-        showToast(
-            "Removed from wishlist"
-        );
-
-    }
-
+function toggleHeart(button,id){
+    let list=JSON.parse(localStorage.getItem("freshcartWishlist")||"[]");
+    if(list.includes(id)){list=list.filter(x=>x!==id);button.textContent="♡";button.style.color="";showToast("Removed from wishlist");}
+    else{list.push(id);button.textContent="♥";button.style.color="#ff4e5b";button.style.transform="scale(1.3)";setTimeout(()=>button.style.transform="",300);showToast("Added to wishlist ❤️");}
+    localStorage.setItem("freshcartWishlist",JSON.stringify(list));
+    renderWishlist();
 }
-
+function openWishlist(){renderWishlist();document.getElementById("wishlistModal").classList.add("show")}
+function renderWishlist(){
+    const ids=JSON.parse(localStorage.getItem("freshcartWishlist")||"[]"); const box=document.getElementById("wishlistGrid"); if(!box)return;
+    const saved=products.filter(p=>ids.includes(p.id));
+    box.innerHTML=saved.length?saved.map(p=>`<div class="wish-card"><img src="${p.image}"><div><strong>${p.name}</strong><div style="font-size:12px;margin-top:4px">₹${p.price}</div><button onclick="addToCart(${p.id},this)">Add to cart</button></div></div>`).join(""): '<div class="empty-state-pro" style="grid-column:1/-1"><div class="big">❤️</div><strong>Your wishlist is empty</strong><p style="color:#7a857e">Tap the heart on any product to save it.</p></div>';
+}
+function rememberProduct(id){let r=JSON.parse(localStorage.getItem("freshcartRecent")||"[]");r=[id,...r.filter(x=>x!==id)].slice(0,6);localStorage.setItem("freshcartRecent",JSON.stringify(r));renderRecent()}
+function renderRecent(){const ids=JSON.parse(localStorage.getItem("freshcartRecent")||"[]");const box=document.getElementById("recentGrid"),sec=document.getElementById("recentSection");if(!box)return;if(!ids.length){sec.style.display="none";return}sec.style.display="block";box.innerHTML=ids.map(id=>products.find(p=>p.id===id)).filter(Boolean).map(p=>`<div class="recent-card"><img src="${p.image}"><strong>${p.name}</strong><span style="font-size:12px">₹${p.price}</span><button onclick="addToCart(${p.id},this)">Add to cart</button></div>`).join("")}
+function closeSmartModal(id){document.getElementById(id)?.classList.remove("show")}
+function openCare(){document.getElementById("careModal").classList.add("show")}
+function saveProfile(){localStorage.setItem("freshcartProfile",JSON.stringify({name:document.getElementById("profileName").value.trim(),email:document.getElementById("profileEmail").value.trim()}));showToast("Profile saved 💚")}
+function openAccount(){const p=JSON.parse(localStorage.getItem("freshcartProfile")||"{}");document.getElementById("profileName").value=p.name||"";document.getElementById("profileEmail").value=p.email||"";document.getElementById("accountOrderText").textContent=getOrderCount()?`You have placed ${getOrderCount()} order${getOrderCount()>1?'s':''}. Your latest order is available to track.`:'No orders yet.';document.getElementById("accountModal").classList.add("show")}
+function openTracking(){const o=JSON.parse(localStorage.getItem("freshcartLastOrder")||"null");const box=document.getElementById("trackingContent");if(!o){box.innerHTML='<div class="empty-state-pro"><div class="big">📦</div><strong>No order to track</strong><p style="color:#7a857e">Place an order first and your tracking card will appear here.</p></div>'}else{box.innerHTML=`<div class="track-id">Order ID: ${o.orderId}<br><small style="font-weight:500">Total: ₹${o.total}</small></div><div class="track-line"><div class="track-step active"><span>Confirmed</span></div><div class="track-step active"><span>Packed</span></div><div class="track-step"><span>Out for Delivery</span></div><div class="track-step"><span>Delivered</span></div></div><p style="margin-top:25px;color:#718078;font-size:12px">Your order is confirmed. We'll keep this timeline ready for the next update.</p>`}document.getElementById("trackingModal").classList.add("show")}
 
 /* =========================================================
    EMAIL VALIDATION
@@ -6660,134 +6776,114 @@ document.addEventListener(
 </script>
 
 
+
+<!-- PREMIUM USER MODALS -->
+<div class="wishlist-drawer" id="wishlistModal" onclick="if(event.target===this)closeSmartModal('wishlistModal')">
+ <div class="modal-card"><div class="modal-head"><div><h2>My Wishlist ❤️</h2><small>Save products for later.</small></div><button class="modal-close" onclick="closeSmartModal('wishlistModal')">✕</button></div><div class="wish-grid" id="wishlistGrid"></div></div>
+</div>
+<div class="account-modal" id="accountModal" onclick="if(event.target===this)closeSmartModal('accountModal')">
+ <div class="modal-card"><div class="modal-head"><div><h2>My FreshCart 👤</h2><small>Your local profile & shopping history.</small></div><button class="modal-close" onclick="closeSmartModal('accountModal')">✕</button></div>
+  <div class="checkout-card" style="margin-bottom:12px"><h3>Profile</h3><div style="margin-top:12px;display:grid;gap:10px"><input id="profileName" placeholder="Your name" class="profile-input"><input id="profileEmail" placeholder="Email address" class="profile-input"><button class="place-order" onclick="saveProfile()">Save Profile</button></div></div>
+  <div class="checkout-card"><h3>Orders</h3><p id="accountOrderText" style="margin-top:8px;color:#718078;font-size:13px">No orders yet.</p><button class="quick-chip" onclick="openTracking();closeSmartModal('accountModal')">📦 Track latest order</button></div>
+ </div>
+</div>
+<div class="tracking-modal" id="trackingModal" onclick="if(event.target===this)closeSmartModal('trackingModal')">
+ <div class="modal-card"><div class="modal-head"><div><h2>Track your order 📦</h2><small>FreshCart delivery timeline</small></div><button class="modal-close" onclick="closeSmartModal('trackingModal')">✕</button></div><div id="trackingContent"></div></div>
+</div>
+<div class="care-modal" id="careModal" onclick="if(event.target===this)closeSmartModal('careModal')">
+ <div class="modal-card"><div class="modal-head"><div><h2>Customer Care 💚</h2><small>We're here to help with your FreshCart order.</small></div><button class="modal-close" onclick="closeSmartModal('careModal')">✕</button></div><div class="care-options">
+  <div class="care-option">📦<b>Order help</b><span>Track, update or ask about your latest order.</span><br><button onclick="openTracking();closeSmartModal('careModal')">Track Order</button></div>
+  <div class="care-option">💳<b>Payment help</b><span>Need help with a payment or checkout issue?</span><br><button onclick="showToast('Please keep your Order ID ready for payment support.')">Get Help</button></div>
+  <div class="care-option">↩️<b>Returns & refunds</b><span>Need help with an item or refund request?</span><br><button onclick="showToast('Returns support: please contact FreshCart with your Order ID.')">Request Help</button></div>
+  <div class="care-option">💬<b>Quick support</b><span>FreshCart support is available for order-related questions.</span><br><button onclick="showToast('Support request noted. Please use your Order ID when contacting us.')">Contact Support</button></div>
+ </div></div>
+</div>
+<div class="bottom-nav"><button onclick="scrollToProducts()"><span>🛍️</span>Shop</button><button onclick="openWishlist()"><span>❤️</span>Wishlist</button><button onclick="openCart()"><span>🛒</span>Cart</button><button onclick="openAccount()"><span>👤</span>Account</button></div>
+
+
 <script>
-/* =========================================================
-   REAL SERVER-BACKED OTP LOGIN
-========================================================= */
 (function(){
-    const gate = document.getElementById("fcLoginGate");
-    const emailInput = document.getElementById("fcLoginEmail");
-    const otpInput = document.getElementById("fcOtp");
-    const otpArea = document.getElementById("fcOtpArea");
-    const msg = document.getElementById("fcLoginMsg");
-    const sendBtn = document.getElementById("fcSendOtp");
-    const verifyBtn = document.getElementById("fcVerifyOtp");
-    const resendBtn = document.getElementById("fcResendOtp");
+ const gate=document.getElementById('fcLoginGate');
+ const $=id=>document.getElementById(id);
+ let loginIdentity='', otpEmail='';
 
-    window.fcShowMsg = function(text, ok){
-        msg.textContent = text || "";
-        msg.style.color = ok ? "#168044" : "#e04c4c";
-    };
+ function validEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());}
+ function validPhone(v){return /^[6-9]\d{9}$/.test(v.replace(/\D/g,''));}
+ function msg(text,ok=false){const m=$('fcLoginMsg');m.className=ok?'fc-login-ok':'fc-login-error';m.textContent=text;}
 
-    window.fcSendOtp = async function(){
-        const email = emailInput.value.trim().toLowerCase();
+ window.fcSendOTP=async function(){
+   const v=$('fcLoginIdentity').value.trim();
+   if(validEmail(v)){
+     loginIdentity=v; otpEmail=v;
+     await requestOTP(v,v);
+     return;
+   }
+   if(validPhone(v)){
+     loginIdentity=v.replace(/\D/g,'');
+     $('fcLoginStep1').style.display='none';
+     $('fcLoginStepEmail').style.display='block';
+     $('fcLoginSub').textContent='For phone login, enter your email so we can securely send the OTP.';
+     $('fcLoginMsg').textContent='';
+     return;
+   }
+   msg('Please enter a valid email with @ or a 10-digit Indian mobile number.');
+ };
 
-        if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){
-            fcShowMsg("Please enter a valid email address.", false);
-            emailInput.focus();
-            return;
-        }
+ window.fcSendPhoneOTP=async function(){
+   const e=$('fcLoginOtpEmail').value.trim();
+   if(!validEmail(e)){msg('Please enter a valid email address with @.');return;}
+   otpEmail=e;
+   await requestOTP(e,loginIdentity);
+ };
 
-        sendBtn.disabled = true;
-        resendBtn.disabled = true;
-        sendBtn.textContent = "Sending OTP...";
-        fcShowMsg("Sending a secure OTP to your email...", true);
+ async function requestOTP(email,identity){
+   try{
+     const r=await fetch('/api/send-otp',{
+       method:'POST',headers:{'Content-Type':'application/json'},
+       body:JSON.stringify({email,identity})
+     });
+     const data=await r.json().catch(()=>({}));
+     if(!r.ok||!data.success){msg(data.message||'Unable to send OTP. Please try again.');return;}
+     $('fcLoginStep1').style.display='none';
+     $('fcLoginStepEmail').style.display='none';
+     $('fcLoginStep2').style.display='block';
+     $('fcOtpHint').textContent='OTP sent to '+email;
+     msg(data.temporaryOtp ? ('Temporary OTP: ' + data.temporaryOtp) : 'OTP sent successfully. Check your email.',true);
+     $('fcLoginOTP').focus();
+   }catch(e){msg('Network error. Please try again.');}
+ }
 
-        try{
-            const response = await fetch("/api/send-otp", {
-                method:"POST",
-                headers:{"Content-Type":"application/json"},
-                body:JSON.stringify({email})
-            });
+ window.fcVerifyOTP=async function(){
+   const code=$('fcLoginOTP').value.trim();
+   if(!/^\d{6}$/.test(code)){msg('Enter the 6-digit OTP.');return;}
+   try{
+     const r=await fetch('/api/verify-otp',{
+       method:'POST',headers:{'Content-Type':'application/json'},
+       body:JSON.stringify({email:otpEmail,otp:code,identity:loginIdentity})
+     });
+     const data=await r.json().catch(()=>({}));
+     if(!r.ok||!data.success){msg(data.message||'Incorrect or expired OTP.');return;}
+     sessionStorage.setItem('fcLoggedIn','1');
+     sessionStorage.setItem('fcUserIdentity',loginIdentity);
+     sessionStorage.setItem('fcUserEmail',otpEmail);
+     sessionStorage.removeItem('fcDemoOTP');
+     gate.style.display='none';
+     $('fcLoginMsg').textContent='';
+   }catch(e){msg('Network error. Please try again.');}
+ };
 
-            const data = await response.json().catch(()=>({}));
+ window.fcBackLogin=function(){
+   $('fcLoginStep1').style.display='block';
+   $('fcLoginStepEmail').style.display='none';
+   $('fcLoginStep2').style.display='none';
+   $('fcLoginMsg').textContent='';
+   $('fcLoginSub').textContent='Enter your email or phone number to continue.';
+   $('fcLoginOTP').value='';
+ };
 
-            if(!response.ok || !data.success){
-                throw new Error(data.message || "Unable to send OTP. Please try again later.");
-            }
-
-            otpArea.classList.add("show");
-            resendBtn.classList.add("show");
-            sendBtn.textContent = "OTP Sent ✓";
-            fcShowMsg("OTP sent. Check your inbox (and Spam/Junk).", true);
-            otpInput.focus();
-
-            setTimeout(()=>{
-                sendBtn.disabled = false;
-                sendBtn.textContent = "Send OTP Again";
-            }, 60000);
-
-        }catch(error){
-            console.error("OTP error:", error);
-            fcShowMsg(error.message || "Unable to send OTP. Please try again later.", false);
-            sendBtn.disabled = false;
-            sendBtn.textContent = "Send OTP";
-        }finally{
-            resendBtn.disabled = false;
-        }
-    };
-
-    window.fcVerifyOtp = async function(){
-        const email = emailInput.value.trim().toLowerCase();
-        const otp = otpInput.value.trim();
-
-        if(!/^\d{6}$/.test(otp)){
-            fcShowMsg("Please enter the 6-digit OTP.", false);
-            otpInput.focus();
-            return;
-        }
-
-        verifyBtn.disabled = true;
-        verifyBtn.textContent = "Verifying...";
-        fcShowMsg("Verifying OTP...", true);
-
-        try{
-            const response = await fetch("/api/verify-otp", {
-                method:"POST",
-                headers:{"Content-Type":"application/json"},
-                body:JSON.stringify({email, otp})
-            });
-
-            const data = await response.json().catch(()=>({}));
-
-            if(!response.ok || !data.success){
-                throw new Error(data.message || "Unable to verify OTP.");
-            }
-
-            sessionStorage.setItem("freshcartLoggedIn","true");
-            sessionStorage.setItem("freshcartLoginEmail", email);
-
-            gate.classList.add("hidden");
-            document.body.style.overflow = "";
-
-        }catch(error){
-            console.error("OTP verification error:", error);
-            fcShowMsg(error.message || "Unable to verify OTP.", false);
-            verifyBtn.disabled = false;
-            verifyBtn.textContent = "Verify & Continue";
-        }
-    };
-
-    if(sessionStorage.getItem("freshcartLoggedIn") === "true"){
-        gate.classList.add("hidden");
-    }else{
-        document.body.style.overflow = "hidden";
-        setTimeout(()=>emailInput.focus(), 100);
-    }
-
-    otpInput.addEventListener("input", function(){
-        this.value = this.value.replace(/\D/g,"").slice(0,6);
-    });
-
-    emailInput.addEventListener("keydown", function(e){
-        if(e.key === "Enter") fcSendOtp();
-    });
-
-    otpInput.addEventListener("keydown", function(e){
-        if(e.key === "Enter") fcVerifyOtp();
-    });
+ if(sessionStorage.getItem('fcLoggedIn')==='1') gate.style.display='none';
 })();
 </script>
-
+</script>
 </body>
 </html>
