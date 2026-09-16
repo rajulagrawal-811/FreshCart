@@ -2550,7 +2550,9 @@ footer li:hover{
     color:#6f7a73;
 }
 
-.summary-line.total-line{
+.summary-line.cod-charge-row span:last-child{font-weight:800;}
+
+.total-line{
 
     border-top:1px solid #e5ebe6;
 
@@ -3336,7 +3338,6 @@ button:active{
 .bottom-nav{display:none}
 .empty-state-pro{text-align:center;padding:35px 10px}.empty-state-pro .big{font-size:48px;margin-bottom:10px}.empty-state-pro button{border:0;background:var(--fc-green);color:white;padding:11px 17px;border-radius:12px;font-weight:800;margin-top:14px}
 .saving-badge{display:inline-flex;align-items:center;gap:5px;background:#fff6d9;color:#9b6900;border-radius:9px;padding:5px 8px;font-size:10px;font-weight:800;margin-top:8px}
-.qty-control{display:flex;align-items:center;gap:0;margin-top:10px;border:1px solid #dbe8df;border-radius:11px;overflow:hidden;width:max-content}.qty-control button{width:30px;height:30px;border:0;background:#eef7f1;color:#1d7d47;font-size:18px;font-weight:900;cursor:pointer}.qty-control span{min-width:30px;text-align:center;font-weight:900;font-size:13px}.cod-charge-row{display:none}.cod-charge-row.show{display:flex}
 @keyframes modalIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
 @media(max-width:760px){.feature-strip{grid-template-columns:repeat(2,1fr);padding:0 15px}.recent-section{padding:0 15px}.wish-grid,.care-options{grid-template-columns:1fr}.smart-sort{align-items:flex-start;flex-direction:column}.bottom-nav{display:flex;position:fixed;left:10px;right:10px;bottom:10px;z-index:9000;background:rgba(255,255,255,.94);backdrop-filter:blur(15px);border:1px solid #dfe9e2;border-radius:20px;padding:7px;justify-content:space-around;box-shadow:0 14px 40px rgba(0,0,0,.14)}.bottom-nav button{border:0;background:transparent;padding:8px 10px;border-radius:12px;color:#5f6c64;font-size:10px;font-weight:800}.bottom-nav button span{display:block;font-size:18px;margin-bottom:2px}.bottom-nav button:active{background:#eaf8ef}.modal-card{padding:18px;border-radius:22px}}
 
@@ -5203,11 +5204,6 @@ button:active{
 
                     <div id="freeDeliveryHint" class="free-delivery-hint"></div>
 
-                    <div class="summary-line cod-charge-row" id="summaryCodChargeRow">
-                        <span>COD Charges</span>
-                        <span id="summaryCodCharge">₹0</span>
-                    </div>
-
                     <div class="summary-line">
 
                         <span>Platform Fee</span>
@@ -5534,12 +5530,11 @@ function displayProducts(list){
             <div class="rating">★★★★★ <span>${product.rating}</span></div>
             <div class="product-meta"><span class="fresh-tag">✓ Fresh pick</span>${low?'<span class="stock-low">Only few left</span>':''}</div>
             <div class="product-bottom"><div><span class="price">₹${product.price}</span><span class="old-price">₹${product.old}</span><div class="saving-badge">Save ₹${product.old-product.price}</div></div>
-            <div class="qty-control" onclick="event.stopPropagation()"><button type="button" onclick="changeQty(${product.id},-1)">−</button><span>${(cart.find(x=>x.id===product.id)||{}).quantity||0}</span><button type="button" onclick="addToCart(${product.id},this)">+</button></div></div></div></article>`;
+            <button class="add" onclick="event.stopPropagation();addToCart(${product.id},this)">+</button></div></div></article>`;
     });
 }
 displayProducts(products);
 renderRecent();
-renderWishlist();
 
 
 /* =========================================================
@@ -5763,22 +5758,6 @@ function updateCart(){
     document.getElementById("cartTotal")
         .textContent="₹"+total;
 
-    refreshProductQtyUI();
-}
-
-function refreshProductQtyUI(){
-    const grid=document.getElementById("productGrid");
-    if(!grid) return;
-    grid.querySelectorAll(".qty-control").forEach(ctrl=>{
-        const plus=ctrl.querySelector("button:last-child");
-        if(!plus) return;
-        const m=plus.getAttribute("onclick")?.match(/addToCart\((\d+)/);
-        if(!m) return;
-        const id=Number(m[1]);
-        const item=cart.find(x=>x.id===id);
-        const span=ctrl.querySelector("span");
-        if(span) span.textContent=item?item.quantity:0;
-    });
 }
 
 
@@ -5913,7 +5892,7 @@ function updateSummary(){
     const codRow=document.getElementById("summaryCodChargeRow");
     const codValue=document.getElementById("summaryCodCharge");
     if(codRow && codValue){
-        codRow.classList.toggle("show", pricing.codCharge>0);
+        codRow.style.display=pricing.codCharge>0 ? "flex" : "none";
         codValue.textContent="₹"+pricing.codCharge;
     }
     document.getElementById("summaryPlatformFee").textContent="₹"+pricing.platformFee;
@@ -6197,10 +6176,9 @@ function generateUpiQr(){
         "UPI ID: "+FRESHCART_UPI_ID;
 }
 
-let selectedPayment="online";
+let selectedPayment="card";
 
 function selectPayment(type,button){
-    selectedPayment=type;
 
     document
         .querySelectorAll(".payment-option")
@@ -6211,6 +6189,8 @@ function selectPayment(type,button){
 
 
     button.classList.add("active");
+    selectedPayment=type;
+    if(typeof updateCheckoutSummary === "function") updateCheckoutSummary();
 
 
     document
@@ -6580,37 +6560,17 @@ function searchProducts(){
 
 function toggleHeart(button,id){
     let list=JSON.parse(localStorage.getItem("freshcartWishlist")||"[]");
-    if(list.includes(id)){list=list.filter(x=>x!==id);if(button){button.textContent="♡";button.style.color="";}showToast("Removed from wishlist");}
-    else{list.push(id);if(button){button.textContent="♥";button.style.color="#ff4e5b";button.style.transform="scale(1.3)";setTimeout(()=>button.style.transform="",300);}showToast("Added to wishlist ❤️");}
+    if(list.includes(id)){list=list.filter(x=>x!==id);button.textContent="♡";button.style.color="";showToast("Removed from wishlist");}
+    else{list.push(id);button.textContent="♥";button.style.color="#ff4e5b";button.style.transform="scale(1.3)";setTimeout(()=>button.style.transform="",300);showToast("Added to wishlist ❤️");}
     localStorage.setItem("freshcartWishlist",JSON.stringify(list));
     renderWishlist();
 }
 function openWishlist(){renderWishlist();document.getElementById("wishlistModal").classList.add("show")}
 function renderWishlist(){
-    const ids=JSON.parse(localStorage.getItem("freshcartWishlist")||"[]");
-    const box=document.getElementById("wishlistGrid");
-    const section=document.getElementById("wishlistSection");
-    const empty=document.getElementById("wishlistEmpty");
-    if(!box)return;
+    const ids=JSON.parse(localStorage.getItem("freshcartWishlist")||"[]"); const box=document.getElementById("wishlistGrid"); if(!box)return;
     const saved=products.filter(p=>ids.includes(p.id));
-    if(section) section.style.display=saved.length?"block":"none";
-    if(empty) empty.style.display="none";
-    box.innerHTML=saved.map(p=>{
-        const qty=(cart.find(x=>x.id===p.id)||{}).quantity||0;
-        return `<div class="wishlist-card">
-            <button class="wishlist-remove" onclick="toggleHeart(null,${p.id})">♥</button>
-            <img src="${p.image}" alt="${p.name}">
-            <h3>${p.name}</h3>
-            <div class="wishlist-price">₹${p.price}</div>
-            <div class="qty-control" style="width:100%;justify-content:center;" onclick="event.stopPropagation()">
-                <button type="button" onclick="changeQty(${p.id},-1)">−</button>
-                <span>${qty}</span>
-                <button type="button" onclick="addToCart(${p.id},this)">+</button>
-            </div>
-        </div>`;
-    }).join("");
+    box.innerHTML=saved.length?saved.map(p=>`<div class="wish-card"><img src="${p.image}"><div><strong>${p.name}</strong><div style="font-size:12px;margin-top:4px">₹${p.price}</div><button onclick="addToCart(${p.id},this)">Add to cart</button></div></div>`).join(""): '<div class="empty-state-pro" style="grid-column:1/-1"><div class="big">❤️</div><strong>Your wishlist is empty</strong><p style="color:#7a857e">Tap the heart on any product to save it.</p></div>';
 }
-
 function rememberProduct(id){let r=JSON.parse(localStorage.getItem("freshcartRecent")||"[]");r=[id,...r.filter(x=>x!==id)].slice(0,6);localStorage.setItem("freshcartRecent",JSON.stringify(r));renderRecent()}
 function renderRecent(){const ids=JSON.parse(localStorage.getItem("freshcartRecent")||"[]");const box=document.getElementById("recentGrid"),sec=document.getElementById("recentSection");if(!box)return;if(!ids.length){sec.style.display="none";return}sec.style.display="block";box.innerHTML=ids.map(id=>products.find(p=>p.id===id)).filter(Boolean).map(p=>`<div class="recent-card"><img src="${p.image}"><strong>${p.name}</strong><span style="font-size:12px">₹${p.price}</span><button onclick="addToCart(${p.id},this)">Add to cart</button></div>`).join("")}
 function closeSmartModal(id){document.getElementById(id)?.classList.remove("show")}
